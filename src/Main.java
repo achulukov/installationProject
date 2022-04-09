@@ -4,58 +4,43 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
+    private static String slash = File.separator;
+    private static String g = "Games" + slash;
+    private static StringBuilder logo = new StringBuilder();
+
+    private static void createFile(String pathFile) {
+        File fileCreate = new File(g + pathFile);
+        try {
+            if (fileCreate.createNewFile()) logo.append("Создан файл " + fileCreate.getName() + "\n");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void createDirectory(String pathDirectory) {
+        File directoryCreate = new File(g + pathDirectory);
+        if (directoryCreate.mkdir())logo.append("Создана директория " + directoryCreate.getName() + "\n");
+    }
+
     public static void main(String[] args) {
-        StringBuilder logo = new StringBuilder();
 
+        createDirectory("src");
+        createDirectory("res");
+        createDirectory("savegames");
+        createDirectory("temp");
+        createDirectory("src" + slash + "main");
+        createDirectory("src" + slash + "test");
 
-        File src = new File("Games/src");
-        if (src.mkdir())logo.append("Создана директория " + src.getName() + "\n");
+        createFile("src" + slash + "main" + slash + "Main.java");
+        createFile("src" + slash + "main" + slash + "Utils.java");
 
-        File res = new File("Games/res");
-        if (res.mkdir())logo.append("Создана директория " + res.getName() + "\n");
+        createDirectory("res" + slash + "drawables");
+        createDirectory("res" + slash + "vectors");
+        createDirectory("res" + slash + "icons");
 
-        File savegames = new File("Games/savegames");
-        if (savegames.mkdir())logo.append("Создана директория " + savegames.getName() + "\n");
+        createFile("temp" + slash + "temp.txt");
 
-        File temp = new File("Games/temp");
-        if (temp.mkdir())logo.append("Создана директория " + temp.getName() + "\n");
-
-        File main = new File("Games/src/main");
-        if (main.mkdir())logo.append("Создана директория " + main.getName() + "\n");
-
-        File test = new File("Games/src/test");
-        if (test.mkdir())logo.append("Создана директория " + test.getName() + "\n");
-
-        File mainJava = new File("Games/src/main/Main.java");
-        try {
-            if (mainJava.createNewFile()) logo.append("Создан файл " + mainJava.getName() + "\n");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        File utilsJava = new File("Games/src/main/Utils.java");
-        try {
-            if (utilsJava.createNewFile()) logo.append("Создан файл " + utilsJava.getName() + "\n");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        File drawables = new File("Games/res/drawables");
-        if (drawables.mkdir())logo.append("Создана директория " + drawables.getName() + "\n");
-
-        File vectors = new File("Games/res/vectors");
-        if (vectors.mkdir())logo.append("Создана директория " + vectors.getName() + "\n");
-
-        File icons = new File("Games/res/icons");
-        if (icons.mkdir())logo.append("Создана директория " + icons.getName() + "\n");
-
-        File tempJava = new File("Games/temp/temp.txt");
-        try {
-            if (tempJava.createNewFile()) logo.append("Создан файл " + tempJava.getName() + "\n");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
+        File tempJava = new File(g + "temp" + slash + "temp.txt");
 
         try(BufferedWriter logoWrite = new BufferedWriter(new FileWriter(tempJava))) {
             logoWrite.write(logo.toString());
